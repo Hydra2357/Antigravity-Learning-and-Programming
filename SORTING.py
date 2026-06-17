@@ -18,6 +18,9 @@ I. SORTING ALGORITHMS
    8. Counting Sort (Integer-based)
    9. Radix Sort (LSD-based)
    10. Bucket Sort
+   11. Tree Sort
+   12. TimSort
+   13. Block Sort
 
 II. SEARCHING ALGORITHMS
    1. Linear Search
@@ -448,6 +451,168 @@ def bucket_sort(arr: List[float]) -> List[float]:
     return arr
 
 
+class _TreeNode:
+    """Helper node class for Tree Sort."""
+    def __init__(self, val: Any):
+        self.val = val
+        self.left: Optional['_TreeNode'] = None
+        self.right: Optional['_TreeNode'] = None
+        self.count: int = 1
+
+
+def tree_sort(arr: List[Any]) -> List[Any]:
+    """
+    Tree Sort: Builds a Binary Search Tree (BST) from the elements of the input array,
+    then performs an in-order traversal to reconstruct the sorted array.
+    
+    Complexity:
+        - Time: Best O(n log n), Average O(n log n), Worst O(n^2) (unbalanced BST)
+        - Space: O(n) auxiliary space
+        - Stable: Yes (duplicates are tracked using node count)
+    """
+    if not arr:
+        return arr
+        
+    def insert(root: Optional[_TreeNode], val: Any) -> _TreeNode:
+        if root is None:
+            return _TreeNode(val)
+        if val == root.val:
+            root.count += 1
+        elif val < root.val:
+            root.left = insert(root.left, val)
+        else:
+            root.right = insert(root.right, val)
+        return root
+
+    # Build the BST
+    root = _TreeNode(arr[0])
+    for val in arr[1:]:
+        insert(root, val)
+        
+    # In-order traversal to rebuild the array
+    index = 0
+    def store_in_order(node: Optional[_TreeNode]):
+        nonlocal index
+        if node is not None:
+            store_in_order(node.left)
+            for _ in range(node.count):
+                arr[index] = node.val
+                index += 1
+            store_in_order(node.right)
+            
+    store_in_order(root)
+    return arr
+
+
+def tim_sort(arr: List[Any]) -> List[Any]:
+    """
+    TimSort: A hybrid, stable sorting algorithm derived from Merge Sort and Insertion Sort.
+    It divides the array into small runs, sorts them with Insertion Sort, and merges them.
+    Used as the default sorting algorithm in Python (via list.sort() and sorted()).
+    
+    Complexity:
+        - Time: Best O(n), Average O(n log n), Worst O(n log n)
+        - Space: O(n) auxiliary space
+        - Stable: Yes
+    """
+    n = len(arr)
+    min_run = 32
+
+    # Step 1: Sort individual runs of size min_run using Insertion Sort
+    for start in range(0, n, min_run):
+        end = min(start + min_run - 1, n - 1)
+        _insertion_sort_slice(arr, start, end)
+
+    # Step 2: Merge sorted runs
+    size = min_run
+    while size < n:
+        for left in range(0, n, 2 * size):
+            mid = min(left + size - 1, n - 1)
+            right = min(left + 2 * size - 1, n - 1)
+
+            # Merge subarrays arr[left...mid] and arr[mid+1...right]
+            if mid < right:
+                _merge_slices(arr, left, mid, right)
+        size *= 2
+
+    return arr
+
+
+def _insertion_sort_slice(arr: List[Any], left: int, right: int) -> None:
+    """Helper to perform insertion sort on a slice of an array in-place."""
+    for i in range(left + 1, right + 1):
+        key = arr[i]
+        j = i - 1
+        while j >= left and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+
+def _merge_slices(arr: List[Any], l: int, m: int, r: int) -> None:
+    """Helper to merge two adjacent sorted slices arr[l..m] and arr[m+1..r] using auxiliary space."""
+    len1, len2 = m - l + 1, r - m
+    left = arr[l:m+1]
+    right = arr[m+1:r+1]
+
+    i = j = 0
+    k = l
+
+    while i < len1 and j < len2:
+        if left[i] <= right[j]:
+            arr[k] = left[i]
+            i += 1
+        else:
+            arr[k] = right[j]
+            j += 1
+        k += 1
+
+    while i < len1:
+        arr[k] = left[i]
+        i += 1
+        k += 1
+
+    while j < len2:
+        arr[k] = right[j]
+        j += 1
+        k += 1
+
+
+def block_sort(arr: List[Any]) -> List[Any]:
+    """
+    Block Sort (Block Merge Sort): A stable, division-based sorting algorithm
+    that divides the array into blocks of size sqrt(n), sorts each block
+    individually, and then merges them. Inspired by algorithms like WikiSort.
+    
+    Complexity:
+        - Time: Best O(n), Average O(n log n), Worst O(n log n)
+        - Space: O(sqrt(n)) or O(1) depending on implementation details
+        - Stable: Yes
+    """
+    n = len(arr)
+    if n <= 16:
+        return insertion_sort(arr)
+
+    # Compute block size: B = sqrt(n)
+    block_size = int(math.isqrt(n))
+    
+    # Step 1: Sort individual blocks of size block_size using Insertion Sort
+    for i in range(0, n, block_size):
+        _insertion_sort_slice(arr, i, min(i + block_size - 1, n - 1))
+        
+    # Step 2: Merge the sorted blocks iteratively
+    size = block_size
+    while size < n:
+        for left in range(0, n, 2 * size):
+            mid = min(left + size - 1, n - 1)
+            right = min(left + 2 * size - 1, n - 1)
+            if mid < right:
+                _merge_slices(arr, left, mid, right)
+        size *= 2
+        
+    return arr
+
+
 # =====================================================================
 # II. SEARCHING ALGORITHMS
 # =====================================================================
@@ -710,7 +875,10 @@ def run_sorting_demo():
         ("Heap Sort", heap_sort),
         ("Shell Sort", shell_sort),
         ("Counting Sort", counting_sort),
-        ("Radix Sort", radix_sort)
+        ("Radix Sort", radix_sort),
+        ("Tree Sort", tree_sort),
+        ("TimSort", tim_sort),
+        ("Block Sort", block_sort)
     ]
     
     for name, func in sorting_algorithms:
