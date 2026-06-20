@@ -1,23 +1,68 @@
-# Sorting and Searching Algorithms Library
+# Antigravity Learning and Programming Library
 
-A comprehensive, educational, and performance-benchmarked Python library implementing standard sorting and searching algorithms. This project serves as a reference guide for understanding algorithmic behavior, complexity, and performance characteristics.
+This repository contains a comprehensive suite of algorithmic reference implementations in Python, featuring performance benchmarks, specialized advanced data structures, and optimization paradigms.
 
 ---
 
-## 🚀 Getting Started
+## 📂 Repository Structure
 
-### Prerequisites
-- Python 3.8 or higher.
+The codebase is organized into two primary libraries:
+1. **[Python-Algorithms](./Python-Algorithms)**: A structured collection of advanced algorithms across 25 distinct mathematical and computer science areas.
+2. **[SORTING.py](./SORTING.py)**: A standalone educational benchmarking suite implementing 13 sorting and 6 searching algorithms.
 
-### Run the Library
-The library includes a built-in benchmarking suite that executes every sorting and searching algorithm against randomized datasets. You can run the code directly:
+---
+
+## 📚 Advanced Python Algorithms Library (`Python-Algorithms`)
+
+This subdirectory contains fully self-contained Python files representing standard and advanced algorithmic concepts. Each file is thoroughly documented with asymptotic time/space complexities and contains an executable demo inside its `if __name__ == "__main__":` block.
+
+### 25 Algorithmic Areas Included
+
+| Folder / Area | Included Topics / Algorithms |
+| :--- | :--- |
+| **01. Mathematical Analysis** | Asymptotic profiling, Recurrence Master Theorem solver, Amortized array resize, Probabilistic Secretary/Birthday paradox simulations |
+| **02. Design Paradigms** | Divide & Conquer (Merge Sort/Binary Search), Greedy, DP, Backtracking (N-Queens), Branch & Bound (0/1 Knapsack) |
+| **03. Randomized Algorithms** | Randomized QuickSort, Randomized Selection (QuickSelect), Monte Carlo Pi, Las Vegas N-Queens |
+| **04. Advanced Trees** | AVL Trees, Red-Black Trees, B-Trees, Splay Trees, Link-Cut Trees (dynamic forest connectivity) |
+| **05. Advanced Heaps** | Binomial Heaps, Fibonacci Heaps (mergeable heaps) |
+| **06. Disjoint Structures** | Disjoint Set Union (DSU / Union-Find) with Rank & Path Compression |
+| **07. Sorting & Selection** | Median of Medians (deterministic linear-time selection), Randomized sorting comparison |
+| **08. Graph Algorithms** | BFS, DFS, Topological Sort (Kahn's & DFS), Strongly Connected Components (Tarjan & Kosaraju), MST (Kruskal & Prim) |
+| **09. Shortest Path** | Dijkstra SSSP, Bellman-Ford (with negative cycle detection), Floyd-Warshall APSP |
+| **10. Network Flow** | Ford-Fulkerson (DFS-based), Edmonds-Karp (BFS-based), Push-Relabel (FIFO active queue) |
+| **11. Matching Problems** | Hopcroft-Karp Bipartite Matching, Edmonds' Blossom Algorithm (general matching), MV Phase-based matching |
+| **12. Advanced DP** | Longest Increasing Subsequence ($O(N \log N)$), Space-optimized Knapsack, Matrix Chain Multiplication, Tree DP |
+| **13. String Algorithms** | Knuth-Morris-Pratt (KMP), Rabin-Karp (rolling hash), Trie, Suffix Array & LCP Array (Kasai) |
+| **14. Computational Geometry** | Graham Scan & Jarvis March (Convex Hull), Sweep Line Closest Pair, Divide & Conquer Closest Pair |
+| **15. Complexity Theory** | NP verifier vs NP-hard exponential solver demonstration using Subset Sum |
+| **16. Approximation Algorithms** | Greedy Set Cover, 2-approx Vertex Cover, 2-approx Metric TSP, Christofides 1.5-approx TSP |
+| **17. Online Algorithms** | LRU/FIFO/LFU caching vs Optimal Offline MIN, Ski Rental randomized/deterministic competitive ratio |
+| **18. Parallel Algorithms** | PRAM Parallel Reduction & Blelloch prefix sum (Scan), Parallel Merge Sort & Brent's Theorem |
+| **19. Streaming Algorithms** | Reservoir Sampling, Count-Min Sketch frequency estimator, HyperLogLog cardinality estimator |
+| **20. Massive Data Algorithms** | Sublinear Sortedness Tester, Sublinear Connected Components count estimator |
+| **21. Parameterized Algorithms** | Fixed-Parameter Tractable (FPT) Vertex Cover ($O(2^k \cdot V + E)$) |
+| **22. Algorithmic Game Theory** | Vickrey Auction (second-price sealed-bid), Gale-Shapley Stable Marriage |
+| **23. Linear Programming** | Primal Simplex tableau solver, Primal-to-Dual LP converter (Strong Duality verifier) |
+| **24. Advanced Graph Topics** | Karger's Randomized Min-Cut, Local Search Max-Cut, Backtracking Max Independent Set, Welsh-Powell Coloring |
+| **25. Specialized Topics** | Radix-2 Cooley-Tukey FFT & polynomial multiplication, Strassen's matrix multiplication |
+
+### Running the Verification Suite
+All algorithms can be verified at once by running the central test script:
 ```bash
-python SORTING.py
+cd Python-Algorithms
+python verify_all.py
 ```
 
 ---
 
-## 📊 Summary Tables
+## 📊 Sorting and Searching Benchmarking Library (`SORTING.py`)
+
+A comprehensive, educational, and performance-benchmarked library implementing standard sorting and searching algorithms.
+
+### Run the Benchmarks
+```bash
+python SORTING.py
+```
 
 ### 1. Sorting Algorithms Complexity
 | Algorithm | Best Case Time | Average Case Time | Worst Case Time | Space Complexity | Stable? | In-Place? | Category |
@@ -53,7 +98,7 @@ python SORTING.py
 
 ---
 
-## 🔍 Detailed Explanations
+## 🔍 Detailed Explanations: Sorting and Searching
 
 ### I. Sorting Algorithms
 
