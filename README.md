@@ -1,4 +1,4 @@
-# Antigravity Learning and Programming Library
+# Programming Library
 
 This repository contains a comprehensive suite of algorithmic reference implementations in Python, featuring performance benchmarks, specialized advanced data structures, and optimization paradigms.
 
